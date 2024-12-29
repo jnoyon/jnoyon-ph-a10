@@ -10,7 +10,10 @@ export default function Navbar() {
             <NavLink to='/all-visa'> Add Visa </NavLink>
             <NavLink to='/all-visa'> My added Visa </NavLink>
             <NavLink to='/all-visa'> My visa Application </NavLink>
-            <NavLink to='/all-visa'> Login </NavLink>
+            <div className="border border-solid border-secondary px-5 py-1 rounded-md flex gap-5 text-sm">
+              <NavLink to='/login'> Login </NavLink>
+              <NavLink to='/register'> Register </NavLink>
+            </div>
          </div>
 
   )
