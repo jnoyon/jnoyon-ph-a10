@@ -2,12 +2,12 @@ import { FaHandsHelping } from "react-icons/fa";
 
 export default function Features() {
   return (
-    <div className='mx-auto w-11/12 container'>
+    <div className='mx-auto w-11/12 container py-5'>
         <div className="title">
             <h2 className="font-bold text-center text-3xl md:text-5xl uppercase mb-5"> Our Features</h2>
             <h3 className='divider font-bold uppercase'> Why We Are Best? </h3>
         </div>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
             <div className="item bg-base-200 rounded-md text-center px-2 py-5 shadow-sm">
                 <FaHandsHelping className="text-5xl mx-auto text-red-300 mb-2" />
                 <h2 className='font-bold uppercase mb-2'> 24/7 Support </h2>
