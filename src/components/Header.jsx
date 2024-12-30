@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -30,7 +31,7 @@ export default function Header() {
               <Navbar></Navbar>
             </div>
           </div>
-          <a className="btn btn-ghost text-xl"> Visa Navigator</a>
+          <Link to='/' className="text-xl font-bold"> Visa Navigator </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <Navbar></Navbar>
