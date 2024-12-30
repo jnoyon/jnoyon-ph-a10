@@ -10,6 +10,7 @@ import ErrorPage from './layout/ErrorPage';
 import Home from './layout/Home';
 import Login from './layout/Login';
 import Register from './layout/Register';
+import AddVisa from './layout/AddVisa';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>
+      },
+      {
+        path: "/add-visa",
+        element: <AddVisa></AddVisa>
       },
       {
         path: '/login',

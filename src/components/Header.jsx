@@ -30,7 +30,7 @@ export default function Header() {
               <Navbar></Navbar>
             </div>
           </div>
-          <a className="btn btn-ghost text-xl">Reactive Visa</a>
+          <a className="btn btn-ghost text-xl"> Visa Navigator</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <Navbar></Navbar>
