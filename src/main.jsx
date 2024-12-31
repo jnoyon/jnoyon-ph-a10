@@ -12,6 +12,9 @@ import Login from './layout/Login';
 import Register from './layout/Register';
 import AddVisa from './layout/AddVisa';
 import AuthProvider from './providers/AuthProvider';
+import AllVisa from './layout/AllVisa';
+import AddedVisa from './layout/AddedVisa';
+import VisaApplication from './layout/VisaApplication';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,18 @@ const router = createBrowserRouter([
       {
         path: "/add-visa",
         element: <AddVisa></AddVisa>
+      },
+      {
+        path: "/all-visa",
+        element: <AllVisa></AllVisa>
+      },
+      {
+        path: "/added-visa",
+        element: <AddedVisa></AddedVisa>
+      },
+      {
+        path: "/visa-application",
+        element: <VisaApplication></VisaApplication>
       },
       {
         path: '/login',

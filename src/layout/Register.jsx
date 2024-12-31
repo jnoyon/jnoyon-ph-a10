@@ -1,13 +1,14 @@
 import { useContext, useState } from "react";
 import {Helmet} from "react-helmet";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {AuthContext} from '../providers/AuthProvider'
 import { ToastContainer, toast } from 'react-toastify';
 
 export default function Register() {
     const failedNotification = (error) => toast.error( error);
     const {createUser} = useContext(AuthContext)
-    const [errorMsg, setErrorMsg] = useState(null)
+    const [errorMsg, setErrorMsg] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,9 +17,18 @@ export default function Register() {
         const photourl = e.target.photourl.value;
         const password = e.target.password.value;
 
+        setErrorMsg('');
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        if(!passwordRegex.test(password)){
+          setErrorMsg('Password must be at least 6 characters long and include at least one uppercase letter and one lowercase letter.');
+          return;
+        }
+
+
         createUser(email, password)
         .then(result => {
-          console.log(result.user)
+          navigate('/');
         })
         .catch( error => {
           failedNotification(error.message);
@@ -32,7 +42,8 @@ export default function Register() {
             <title> Registration - Visa Navigator </title>
       </Helmet>
       <ToastContainer position="top-center"  autoClose={2000} theme="light" />
-      <div className="bg-base-300 p-5 flex flex-col gap-2 rounded-md shadow-md">
+      <div className="bg-base-300 md:w-1/3 p-5 flex flex-col gap-2 rounded-md shadow-md">
+      <h2 className="font-bold text-center text-3xl md:text-5xl uppercase mb-5"> Registeration </h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <label className="input input-bordered flex items-center gap-2">
             Name <input type="text" name='name' className="grow" placeholder="Enter Your Name" />{" "}
