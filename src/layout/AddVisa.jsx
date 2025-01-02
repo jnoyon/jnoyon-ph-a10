@@ -32,10 +32,9 @@ export default function AddVisa() {
       fee,
       validity,
       applicationMethod}
-      console.log(newVisa)
 
       // 
-      fetch('http://localhost:5000/all-visa', {
+      fetch('http://localhost:5000/visa', {
         method: 'POST',
         headers: {
           'content-type' : 'application/json'
@@ -44,7 +43,6 @@ export default function AddVisa() {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         if(data.insertedId){
           swal({
             title: 'Success',
@@ -63,94 +61,118 @@ export default function AddVisa() {
             <h2 className="font-bold text-center text-3xl md:text-5xl uppercase mb-5"> Add Visa </h2>
             <h3 className='divider font-bold uppercase'> Fill up the form </h3>
         </div>
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row flex-wrap justify-between gap-5 bg-base-300 p-5 rounded-md">
-        <input
-          type="url"
-          name="countryimageurl"
-          className="input input-bordered"
-          placeholder="Country Image"
-        />
-        <input
-          type="text"
-          name="countryname"
-          className="input input-bordered"
-          placeholder="Country Name"
-        />
-        <select
-          name="visatype"
-          className="select select-bordered"
-        >
-          <option value="Student Visa">Student Visa</option>
-          <option value="Tourist Visa">Tourist Visa</option>
-          <option value="Official Visa">Official Visa</option>
-        </select>
-        <input
-          type="text"
-          name="processingtime"
-          className="input input-bordered"
-          placeholder="Processing Time"
-        />
-        <div className="flex flex-col md:flex-row gap-2">
-          <label className="label cursor-pointer flex gap-2">
-            <input
-              type="checkbox"
-              name="validpassport"
-              className="checkbox"
-            />
-            <span className="label-text">Valid Passport</span>
-          </label>
-          <label className="label cursor-pointer flex gap-2">
-            <input
-              type="checkbox"
-              name="visaapplicationform"
-              className="checkbox"
-            />
-            <span className="label-text">Visa Application Form</span>
-          </label>
-          <label className="label cursor-pointer flex gap-2">
-            <input
-              type="checkbox"
-              name="passportphoto"
-              className="checkbox"
-            />
-            <span className="label-text">Recent Passport Sized Photograph</span>
-          </label>
-        </div>
-        <textarea
-          name="bio"
-          className="textarea textarea-bordered"
-          placeholder="Bio"
-        />
-        <input
-          type="number"
-          name="agerestriction"
-          className="input input-bordered"
-          placeholder="Age Restriction"
-        />
-        <input
-          type="number"
-          name="fee"
-          className="input input-bordered"
-          placeholder="Fee"
-        />
-        <input
-          type="text"
-          name="validity"
-          className="input input-bordered"
-          placeholder="Validity"
-        />
-        <input
-          type="text"
-          name="applicationmethod"
-          className="input input-bordered"
-          placeholder="Application Method"
-        />
-        <input
-          type="submit"
-          value="Add Visa"
-          className="btn col-span-3 btn-secondary"
-        />
-      </form>
+        <form onSubmit={handleSubmit} className="md:grid md:grid-cols-3 flex flex-col md:flex-none gap-5 rounded-md">
+  <div className="flex flex-col">
+    <label className="font-bold">Country Image</label>
+    <input
+      type="url"
+      name="countryimageurl"
+      className="input input-bordered"
+      placeholder="Country URL"
+    />
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Country Name</label>
+    <input
+      type="text"
+      name="countryname"
+      className="input input-bordered"
+      placeholder="Country Name"
+    />
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Visa Type</label>
+    <select name="visatype" className="select select-bordered">
+      <option value="Student Visa">Student Visa</option>
+      <option value="Tourist Visa">Tourist Visa</option>
+      <option value="Official Visa">Official Visa</option>
+    </select>
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Processing Time</label>
+    <input
+      type="text"
+      name="processingtime"
+      className="input input-bordered"
+      placeholder="Processing Time"
+    />
+  </div>
+  
+  <div className="col-span-2">
+  <h2 className="font-bold">Required Documents</h2>
+  <div className="flex flex-col md:flex-row gap-2 border border-solid border-base-300 rounded-md p-1">
+    <label className="label cursor-pointer flex justify-start gap-2">
+      <input type="checkbox" name="validpassport" className="checkbox" />
+      <span className="label-text font-bold">Valid Passport</span>
+    </label>
+    
+    <label className="label cursor-pointer flex justify-start gap-2">
+      <input type="checkbox" name="visaapplicationform" className="checkbox" />
+      <span className="label-text font-bold">Visa Application Form</span>
+    </label>
+    
+    <label className="label cursor-pointer flex justify-start gap-2">
+      <input type="checkbox" name="passportphoto" className="checkbox" />
+      <span className="label-text font-bold">Recent Passport Sized Photograph</span>
+    </label>
+  </div>
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Bio</label>
+    <textarea
+      name="bio"
+      className="textarea textarea-bordered"
+      placeholder="Bio"
+    ></textarea>
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Age Restriction</label>
+    <input
+      type="number"
+      name="agerestriction"
+      className="input input-bordered"
+      placeholder="Age Restriction"
+    />
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Fee</label>
+    <input
+      type="number"
+      name="fee"
+      className="input input-bordered"
+      placeholder="Fee"
+    />
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Validity</label>
+    <input
+      type="text"
+      name="validity"
+      className="input input-bordered"
+      placeholder="Validity"
+    />
+  </div>
+  
+  <div className="flex flex-col">
+    <label className="font-bold">Application Method</label>
+    <input
+      type="text"
+      name="applicationmethod"
+      className="input input-bordered"
+      placeholder="Application Method"
+    />
+  </div>
+  
+  <input type="submit" value="Add Visa" className="btn col-span-3 btn-secondary" />
+</form>
+
     </div>
   )
 }

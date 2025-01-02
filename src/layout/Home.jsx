@@ -11,7 +11,7 @@ export default function Home() {
     <div>
       <Slider></Slider>
       <Features></Features>
-      <LatestVisa></LatestVisa>
+      <LatestVisa visas={visas}></LatestVisa>
       <Consult></Consult>
     </div>
   )

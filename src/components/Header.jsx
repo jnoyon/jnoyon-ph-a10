@@ -31,7 +31,7 @@ export default function Header() {
               <Navbar></Navbar>
             </div>
           </div>
-          <Link to='/' className="text-xl font-bold"> Visa Navigator </Link>
+          <Link to='/' className="md:text-xl font-bold"> Visa Navigator </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <Navbar></Navbar>
