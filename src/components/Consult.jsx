@@ -1,4 +1,6 @@
 import { MdOutlineWifiCalling3 } from "react-icons/md";
+import Lottie from "lottie-react";
+import registerLottieData from '../assets/support.json'
 
 export default function Consult() {
   return (
@@ -6,7 +8,7 @@ export default function Consult() {
         <div className="container mx-auto w-11/12">
             <div className="flex flex-col md:flex-row gap-5">
                 <div className="left md:w-1/2">
-                    <img src="/man.jpg" alt="" className='rounded-full' />
+                <Lottie animationData={registerLottieData} loop={true} />
                 </div>
                 <div className="flex flex-col gap-5 justify-center md:w-1/2">
                     <div className="heading">
