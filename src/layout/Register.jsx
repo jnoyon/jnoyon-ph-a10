@@ -68,7 +68,7 @@ export default function Register() {
       </Helmet>
       <ToastContainer position="top-center"  autoClose={2000} theme="light" />
       <div className="bg-base-300 md:w-1/3 p-5 flex flex-col gap-2 rounded-md shadow-md">
-      <h2 className="font-bold text-center text-3xl md:text-5xl uppercase mb-5"> Registeration </h2>
+      <h2 className="font-bold text-center text-3xl md:text-5xl uppercase mb-5"> Registration </h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <label className="input input-bordered flex items-center gap-2">
             Name <input type="text" name='name' className="grow" placeholder="Enter Your Name" />{" "}

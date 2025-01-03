@@ -17,6 +17,7 @@ import AddedVisa from './layout/AddedVisa';
 import VisaApplication from './layout/VisaApplication';
 import PrivateRoute from '../PrivateRoute';
 import VisaDetails from './layout/VisaDetails';
+import PasswordReset from './layout/PasswordReset';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: '/password-reset',
+        element: <PasswordReset></PasswordReset>
       }
     ]
   },
