@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from "../providers/AuthProvider";
 
 export default function Login() {
   const {loginUser, loginWithGoogle} = useContext(AuthContext);
-  
+  const navigate = useNavigate();
+  const location = useLocation();
   const failedNotification = (error) => toast.error( error);
   const handleLogin = (e) => {
         e.preventDefault();
@@ -16,6 +17,7 @@ export default function Login() {
         loginUser(email, password)
         .then(result => {
           console.log(result.user)
+          navigate(location?.state? location.state : "/")
         })
         .catch( error => {
           failedNotification(error.message);
@@ -26,6 +28,7 @@ export default function Login() {
     loginWithGoogle()
     .then(result => {
       console.log(result.user)
+      navigate(location?.state? location.state : "/")
     })
     .catch( error => {
       failedNotification(error.message);

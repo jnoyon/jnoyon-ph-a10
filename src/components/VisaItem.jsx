@@ -1,7 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export default function VisaItem({visa}) {
-  const { countryImageUrl, countryName, visaType, processingTime, validPassport, visaApplicationForm, passportPhoto, bio, ageRestriction, fee, validity, applicationMethod } = visa;
+  const {_id, countryImageUrl, countryName, visaType, processingTime, validPassport, visaApplicationForm, passportPhoto, bio, ageRestriction, fee, validity, applicationMethod } = visa;
+  
   return (
     <div className='bg-base-200 shadow-sm rounded-md p-2 text-center'>
         <img src={countryImageUrl} alt="contry" className='h-20 mx-auto rounded-md mb-1' />
@@ -10,7 +12,7 @@ export default function VisaItem({visa}) {
             <li> <b> Visa Type: </b> {visaType} </li>
             <li> <b> Procession Time: </b> {processingTime} </li>
         </ul>
-        <button className='bg-green-500 px-5 rounded-md font-bold py-1 text-white text-sm'> See Details </button>
+        <Link to={`/visa/${_id}`}  className='bg-green-500 px-5 rounded-md font-bold py-1 text-white text-sm'> See Details </Link>
     </div>
   )
 }

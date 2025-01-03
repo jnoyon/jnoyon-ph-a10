@@ -39,7 +39,7 @@ export default function AuthProvider({children}) {
       const unsubscriber = onAuthStateChanged(auth, currentUser =>{
         setLoading(true);
         setUser(currentUser)
-
+        setLoading(false)
       })
       return () => {
         unsubscriber();
@@ -51,7 +51,8 @@ export default function AuthProvider({children}) {
       loginUser,
       loginWithGoogle,
       user,
-      signOutUser
+      signOutUser,
+      loading
     }
   return (
     <AuthContext.Provider value={authInfo}>

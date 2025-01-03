@@ -15,6 +15,8 @@ import AuthProvider from './providers/AuthProvider';
 import AllVisa from './layout/AllVisa';
 import AddedVisa from './layout/AddedVisa';
 import VisaApplication from './layout/VisaApplication';
+import PrivateRoute from '../PrivateRoute';
+import VisaDetails from './layout/VisaDetails';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-visa",
-        element: <AddVisa></AddVisa>
+        element: <PrivateRoute> <AddVisa></AddVisa> </PrivateRoute>
       },
       {
         path: "/all-visa",
@@ -38,12 +40,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/added-visa",
-        element: <AddedVisa></AddedVisa>,
+        element: <PrivateRoute> <AddedVisa></AddedVisa></PrivateRoute>,
         loader: () => fetch('http://localhost:5000/visa')
       },
       {
         path: "/visa-application",
-        element: <VisaApplication></VisaApplication>
+        element: <PrivateRoute> <VisaApplication></VisaApplication> </PrivateRoute>
+      },
+      {
+        path: "visa/:_id",
+        element: <PrivateRoute> <VisaDetails></VisaDetails> </PrivateRoute>,
+        loader: () => fetch('http://localhost:5000/visa')
       },
       {
         path: '/login',
