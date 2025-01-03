@@ -1,6 +1,7 @@
 import { MdOutlineWifiCalling3 } from "react-icons/md";
 import Lottie from "lottie-react";
 import registerLottieData from '../assets/support.json'
+import { Typewriter } from 'react-simple-typewriter'
 
 export default function Consult() {
   return (
@@ -14,7 +15,16 @@ export default function Consult() {
                     <div className="heading">
                         <p className='text-xl font-bold uppercase mb-1 text-primary'> It is time to </p>
                         <h1 className='text-5xl font-bold uppercase mb-2'> Consult with Our  </h1>
-                        <h1 className='text-5xl font-bold text-secondary uppercase'> Professional  </h1>
+                        <h1 className='text-5xl font-bold text-secondary uppercase'> <Typewriter
+                            words={['Professional', 'Experts', 'Mentors', 'Support Team!']}
+                            loop={5}
+                            cursor
+                            cursorStyle='_'
+                            typeSpeed={70}
+                            deleteSpeed={50}
+                            delaySpeed={1000}
+
+                        />  </h1>
                     </div>
                     <p className='text-gray-700 text-sm leading-6 text-justify'>It’s time to make your journey seamless! Consult with our professionals for expert visa guidance. Whether for travel, work, or study, we ensure a hassle-free process. Get personalized assistance, quick updates, and support every step of the way. Start your visa application with confidence today! </p>
                     <div className="flex flex-col md:flex-row gap-5 justify-between">

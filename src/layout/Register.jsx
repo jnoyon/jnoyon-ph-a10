@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function Register() {
     const failedNotification = (error) => toast.error( error);
-    const {createUser} = useContext(AuthContext)
+    const {createUser, setUser, updateUserProfile, loginWithGoogle} = useContext(AuthContext)
     const [errorMsg, setErrorMsg] = useState(null);
     const navigate = useNavigate();
 
@@ -28,13 +28,38 @@ export default function Register() {
 
         createUser(email, password)
         .then(result => {
-          navigate('/');
+          console.log(result.user)
+          updateUserProfile({ displayName: name, photoURL: photourl })
+          .then(()=>{
+            setUser({...result.user, displayName: name, photoURL: photourl})
+            navigate('/');
+          })
+          .catch(error=> {
+            console.log(error)
+            failedNotification("Registration Failed")
+          })
         })
+
+        
+
+        
+
         .catch( error => {
           failedNotification(error.message);
           setErrorMsg(error.message)
         })
       
+    }
+
+    const handleLoginWithGoogle =() => {
+      loginWithGoogle()
+      .then(result => {
+        console.log(result.user)
+        navigate("/")
+      })
+      .catch( error => {
+        failedNotification(error.message);
+      })
     }
   return (
     <div className="flex items-center justify-center min-h-lvh">
@@ -65,6 +90,7 @@ export default function Register() {
         </form>
         <p className="text-sm text-red-500"> { errorMsg} </p>
         <p className="text-sm"> Already have Account? <Link to='/login' className="text-secondary"> Login </Link> </p>
+        <button onClick={handleLoginWithGoogle} className="btn btn-wide btn-primary"> Login with Gmail </button>
       </div>
     </div>
   )
