@@ -7,7 +7,7 @@ export default function VisaApplication() {
   return (
     <div className='container mx-auto w-11/12'>
           <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5"> All Applications </h2>
-          <div className="grid grid-cols-4 gap-5">
+          <div className="grid md:grid-cols-4 gap-5">
             {
               applications.map((application, index)=> <VisaApplicationItem key={index} application={application}></VisaApplicationItem>)
             }
