@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import LatestVisaItem from './LatestVisaItem'
 import VisaItem from './VisaItem'
 
@@ -9,7 +10,11 @@ export default function LatestVisa({visas}) {
                 {
                   visas.map((visa, index)=> <LatestVisaItem key={index} visa={visa}></LatestVisaItem>)
                 }
+                
               </div>
+             <div className='text-center'>
+              <Link className='btn btn-wide btn-primary mt-5 font-bold' to='/all-visa'> All Visa </Link>
+             </div>
     </div>
   )
 }
