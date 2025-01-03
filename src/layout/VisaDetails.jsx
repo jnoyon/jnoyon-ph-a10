@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useLoaderData, useParams } from 'react-router-dom'
+import swal from 'sweetalert';
+import { AuthContext } from '../providers/AuthProvider';
 
 export default function VisaDetails() {
     const {_id} = useParams();
-    
+    const {user} = useContext(AuthContext);
     const data = useLoaderData();
     
     const visa = data.find(visa => visa._id == _id)
@@ -12,6 +14,39 @@ export default function VisaDetails() {
       console.log(id)
       document.getElementById('apply').showModal()
     }
+
+
+    // Handle Submit
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const email = e.target.email.value;
+      const firstName = e.target.fname.value;
+      const lastName = e.target.lname.value;
+      const appliedDate = e.target.date.value;
+      const fee = e.target.fee.value;
+      
+      const visaApplication = { countryName, countryImageUrl, processingTime, visaType, email, firstName, lastName, appliedDate, fee };
+
+      fetch('http://localhost:5000/visa-application', {
+        method: 'POST',
+        headers: {
+          'content-type' : 'application/json'
+        },
+        body: JSON.stringify(visaApplication)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.insertedId){
+          swal({
+            title: 'Success',
+            text: 'Visa Application Successful',
+            icon: 'success',
+          });
+          document.getElementById("apply").close()
+        }
+      })
+    }
+
     return (
     <div className='mx-auto container w-11/12 py-5'>
         <h2 className="font-bold text-center text-3xl md:text-5xl uppercase mb-5"> Visa Information {countryName} </h2>
@@ -33,12 +68,62 @@ export default function VisaDetails() {
           </ul>
           <button className='btn btn-wide btn-warning' onClick={()=>handleApply(_id)}> Apply Now </button>
       </div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
+     
     
     <dialog id="apply" className="modal">
       <div className="modal-box">
-        <h3 className="font-bold text-lg">Hello!</h3>
-        <p className="py-4">Press ESC key or click outside to close</p>
+      
+          <form onSubmit={handleSubmit}>
+          <div className="flex flex-col">
+                <label className="font-bold">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  className="input input-bordered"
+                  defaultValue={user.email}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="font-bold">First Name</label>
+                <input
+                  type="text"
+                  name="fname"
+                  className="input input-bordered"
+                  
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold">Last Name</label>
+                <input
+                  type="text"
+                  name="lname"
+                  className="input input-bordered"
+                  
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold">Applied Date</label>
+                <input
+                  type="text"
+                  name="date"
+                  className="input input-bordered"
+                  defaultValue={new Date().toISOString().split('T')[0]}
+                  
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold">Fee </label>
+                <input
+                  type="text"
+                  name="fee"
+                  className="input input-bordered"
+                  defaultValue={fee}
+                />
+              </div>
+              <input type="submit" className='btn btn-warning mt-2  w-full' value="Submit Now" />
+          </form>
+              
       </div>
       <form method="dialog" className="modal-backdrop">
         <button>close</button>
