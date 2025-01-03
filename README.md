@@ -9,5 +9,4 @@ VISA Navigator is an intuitive web application designed to streamline the visa a
 - User Authentication System
 - Compatible with Tailwind and CSS
 - Unique Design
-
-
+- Fully Functional
