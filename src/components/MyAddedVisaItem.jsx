@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import swal from "sweetalert";
+
 export default function MyAddedVisaItem({ visa }) {
   const {
     _id,
@@ -7,21 +8,18 @@ export default function MyAddedVisaItem({ visa }) {
     countryName,
     visaType,
     processingTime,
-    validPassport,
-    visaApplicationForm,
-    passportPhoto,
-    bio,
-    ageRestriction,
     fee,
     validity,
     applicationMethod,
   } = visa;
 
+  const [currentVisa, setCurrentVisa] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleDelete = (_id) => {
-    console.log(_id);
     swal({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
+      text: "Once deleted, you will not be able to recover this Visa!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -34,11 +32,11 @@ export default function MyAddedVisaItem({ visa }) {
           .then((data) => {
             console.log(data.deletedCount);
             if (data.deletedCount > 0) {
-              swal("Poof! Your imaginary file has been deleted!", {
+              swal("Visa has been deleted!", {
                 icon: "success",
               });
             } else {
-              swal("Visa can be be deleted!", {
+              swal("Visa can be deleted!", {
                 icon: "error",
               });
             }
@@ -50,30 +48,54 @@ export default function MyAddedVisaItem({ visa }) {
             console.log("ERROR", error);
           });
       } else {
-        swal("Your imaginary file is safe!");
+        swal("Visa is safe!");
       }
     });
   };
 
-  const handleUpdate = (_id) => {
-    console.log(_id);
-    document.getElementById("my_modal_1").showModal();
+  const handleUpdate = (visa) => {
+    setCurrentVisa(visa);
+    setIsModalOpen(true);
+  };
 
-    fetch(`http://localhost:5000/visa/${_id}`, {
+  const handleChange = (e) => {
+    const { name, value, checked, type } = e.target;
+    setCurrentVisa((prevState) => ({
+      ...prevState,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Send the updated data to the server
+    fetch(`http://localhost:5000/visa/${currentVisa._id}`, {
       method: "PUT",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedVisa)
+      body: JSON.stringify(currentVisa),
     })
-
+      .then((res) => res.json())
+      .then((data) => {
+        swal("Visa has been updated!", {
+          icon: "success",
+        });
+        setIsModalOpen(false);
+      })
+      .catch((error) => {
+        swal("Error updating visa!", {
+          icon: "error",
+        });
+        console.log("Error updating visa: ", error);
+      });
   };
+
   return (
     <>
       <div className="bg-base-200 shadow-sm rounded-md p-2 text-center">
         <img
           src={countryImageUrl}
-          alt="contry"
+          alt="country"
           className="h-20 mx-auto rounded-md mb-1"
         />
         <h2 className="font-bold mb-2"> {countryName} </h2>
@@ -82,189 +104,203 @@ export default function MyAddedVisaItem({ visa }) {
             <b> Visa Type: </b> {visaType}
           </li>
           <li>
-            
             <b> Procession Time: </b> {processingTime}
           </li>
           <li>
-            
             <b> Fee: </b> {fee}
           </li>
           <li>
-            
             <b> Validity: </b> {validity}
           </li>
           <li>
-            
             <b> Application Method: </b> {applicationMethod}
           </li>
         </ul>
         <div className="flex gap-2 justify-center">
           <button
             className="bg-green-500 px-5 rounded-md font-bold py-1 text-white text-sm"
-            onClick={() => handleUpdate(_id)}
+            onClick={() => handleUpdate(visa)} // Pass the visa object to the handler
           >
-            
             Update
           </button>
           <button
             className="bg-red-500 px-5 rounded-md font-bold py-1 text-white text-sm"
             onClick={() => handleDelete(_id)}
           >
-            
             Delete
           </button>
         </div>
       </div>
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <div className="modal-action">
-            <form method="dialog">
-              <div className="flex flex-col">
-                <label className="font-bold">Country Image</label>
-                <input
-                  type="url"
-                  name="countryimageurl"
-                  className="input input-bordered"
-                  defaultValue={countryImageUrl}
-                />
-              </div>
 
-              <div className="flex flex-col">
-                <label className="font-bold">Country Name</label>
-                <input
-                  type="text"
-                  name="countryname"
-                  className="input input-bordered"
-                  defaultValue={countryName}
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label className="font-bold">Visa Type</label>
-                <select
-                  name="visatype"
-                  className="select select-bordered"
-                  defaultChecked={visaType}
-                >
-                  <option value="Student Visa">Student Visa</option>
-                  <option value="Tourist Visa">Tourist Visa</option>
-                  <option value="Official Visa">Official Visa</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col">
-                <label className="font-bold">Processing Time</label>
-                <input
-                  type="text"
-                  name="processingtime"
-                  className="input input-bordered"
-                  defaultValue={processingTime}
-                />
-              </div>
-
-              <div className="col-span-2">
-                <h2 className="font-bold">Required Documents</h2>
-                <div className="flex flex-col md:flex-row gap-2 border border-solid border-base-300 rounded-md p-1">
-                  <label className="label cursor-pointer flex justify-start gap-2">
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay fixed top-0 left-1/3">
+          <div className="modal-box ">
+            <div className="modal-action  ">
+              {currentVisa && (
+                <form method="dialog" onSubmit={handleSubmit}>
+                  <div className="flex flex-col">
+                    <label className="font-bold">Country Image</label>
                     <input
-                      type="checkbox"
-                      name="validpassport"
-                      className="checkbox"
-                      defaultValue={validPassport}
+                      type="url"
+                      name="countryImageUrl"
+                      className="input input-bordered"
+                      value={currentVisa.countryImageUrl}
+                      onChange={handleChange}
                     />
-                    <span className="label-text font-bold">Valid Passport</span>
-                  </label>
+                  </div>
 
-                  <label className="label cursor-pointer flex justify-start gap-2">
+                  <div className="flex flex-col">
+                    <label className="font-bold">Country Name</label>
                     <input
-                      type="checkbox"
-                      name="visaapplicationform"
-                      className="checkbox"
-                      defaultChecked={visaApplicationForm}
+                      type="text"
+                      name="countryName"
+                      className="input input-bordered"
+                      value={currentVisa.countryName}
+                      onChange={handleChange}
                     />
-                    <span className="label-text font-bold">
-                      Visa Application Form
-                    </span>
-                  </label>
+                  </div>
 
-                  <label className="label cursor-pointer flex justify-start gap-2">
+                  <div className="flex flex-col">
+                    <label className="font-bold">Visa Type</label>
+                    <select
+                      name="visaType"
+                      className="select select-bordered"
+                      value={currentVisa.visaType}
+                      onChange={handleChange}
+                    >
+                      <option value="Student Visa">Student Visa</option>
+                      <option value="Tourist Visa">Tourist Visa</option>
+                      <option value="Official Visa">Official Visa</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="font-bold">Processing Time</label>
                     <input
-                      type="checkbox"
-                      name="passportphoto"
-                      className="checkbox"
-                      defaultChecked={passportPhoto}
+                      type="text"
+                      name="processingTime"
+                      className="input input-bordered"
+                      value={currentVisa.processingTime}
+                      onChange={handleChange}
                     />
-                    <span className="label-text font-bold">
-                      Recent Passport Sized Photograph
-                    </span>
-                  </label>
-                </div>
-              </div>
+                  </div>
 
-              <div className="flex flex-col">
-                <label className="font-bold">Bio</label>
-                <textarea
-                  name="bio"
-                  className="textarea textarea-bordered"
-                  defaultValue={bio}
-                ></textarea>
-              </div>
+                  <div className="col-span-2">
+                    <h2 className="font-bold">Required Documents</h2>
+                    <div className="flex flex-col md:flex-row gap-2 border border-solid border-base-300 rounded-md p-1">
+                      <label className="label cursor-pointer flex justify-start gap-2">
+                        <input
+                          type="checkbox"
+                          name="validPassport"
+                          className="checkbox"
+                          checked={currentVisa.validPassport}
+                          onChange={handleChange}
+                        />
+                        <span className="label-text font-bold">Valid Passport</span>
+                      </label>
 
-              <div className="flex flex-col">
-                <label className="font-bold">Age Restriction</label>
-                <input
-                  type="number"
-                  name="agerestriction"
-                  className="input input-bordered"
-                  defaultValue={ageRestriction}
-                />
-              </div>
+                      <label className="label cursor-pointer flex justify-start gap-2">
+                        <input
+                          type="checkbox"
+                          name="visaApplicationForm"
+                          className="checkbox"
+                          checked={currentVisa.visaApplicationForm}
+                          onChange={handleChange}
+                        />
+                        <span className="label-text font-bold">
+                          Visa Application Form
+                        </span>
+                      </label>
 
-              <div className="flex flex-col">
-                <label className="font-bold">Fee</label>
-                <input
-                  type="number"
-                  name="fee"
-                  className="input input-bordered"
-                  placeholder="Fee"
-                  defaultValue={fee}
-                  
-                />
-              </div>
+                      <label className="label cursor-pointer flex justify-start gap-2">
+                        <input
+                          type="checkbox"
+                          name="passportPhoto"
+                          className="checkbox"
+                          checked={currentVisa.passportPhoto}
+                          onChange={handleChange}
+                        />
+                        <span className="label-text font-bold">
+                          Recent Passport Sized Photograph
+                        </span>
+                      </label>
+                    </div>
+                  </div>
 
-              <div className="flex flex-col">
-                <label className="font-bold">Validity</label>
-                <input
-                  type="text"
-                  name="validity"
-                  className="input input-bordered"
-                  placeholder="Validity"
-                  defaultValue={validity}
-                />
-              </div>
+                  <div className="flex flex-col">
+                    <label className="font-bold">Bio</label>
+                    <textarea
+                      name="bio"
+                      className="textarea textarea-bordered"
+                      value={currentVisa.bio}
+                      onChange={handleChange}
+                    ></textarea>
+                  </div>
 
-              <div className="flex flex-col mb-2">
-                <label className="font-bold">Application Method</label>
-                <input
-                  type="text"
-                  name="applicationmethod"
-                  className="input input-bordered"
-                  placeholder="Application Method"
-                  defaultValue={applicationMethod}
-                />
-              </div>
+                  <div className="flex flex-col">
+                    <label className="font-bold">Age Restriction</label>
+                    <input
+                      type="number"
+                      name="ageRestriction"
+                      className="input input-bordered"
+                      value={currentVisa.ageRestriction}
+                      onChange={handleChange}
+                    />
+                  </div>
 
-              <input
-                type="submit"
-                value="Update Visa"
-                className="btn col-span-3 btn-secondary"
-              />
+                  <div className="flex flex-col">
+                    <label className="font-bold">Fee</label>
+                    <input
+                      type="number"
+                      name="fee"
+                      className="input input-bordered"
+                      value={currentVisa.fee}
+                      onChange={handleChange}
+                    />
+                  </div>
 
-              <button className="btn">Close</button>
-            </form>
+                  <div className="flex flex-col">
+                    <label className="font-bold">Validity</label>
+                    <input
+                      type="text"
+                      name="validity"
+                      className="input input-bordered"
+                      value={currentVisa.validity}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="flex flex-col mb-2">
+                    <label className="font-bold">Application Method</label>
+                    <input
+                      type="text"
+                      name="applicationMethod"
+                      className="input input-bordered"
+                      value={currentVisa.applicationMethod}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <input
+                    type="submit"
+                    value="Update Visa"
+                    className="btn col-span-3 btn-secondary mr-2"
+                  />
+
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={() => setIsModalOpen(false)} 
+                  >
+                    Close
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
-      </dialog>
+      )}
     </>
   );
 }

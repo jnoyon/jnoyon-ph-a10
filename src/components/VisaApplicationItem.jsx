@@ -20,7 +20,7 @@ export default function VisaApplicationItem({application}) {
               .then((data) => {
                 console.log(data.deletedCount);
                 if (data.deletedCount > 0) {
-                  swal("Poof! Visa has been deleted!", {
+                  swal("Visa has been deleted!", {
                     icon: "success",
                   });
                 } else {
