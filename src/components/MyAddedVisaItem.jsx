@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import swal from "sweetalert";
 
-export default function MyAddedVisaItem({ visa }) {
+export default function MyAddedVisaItem({ visa, setVisas }) {
   const {
     _id,
     countryImageUrl,
@@ -35,6 +35,7 @@ export default function MyAddedVisaItem({ visa }) {
               swal("Visa has been deleted!", {
                 icon: "success",
               });
+              setVisas((prevVisas) => prevVisas.filter((visa) => visa._id !== _id));
             } else {
               swal("Visa can be deleted!", {
                 icon: "error",
@@ -67,7 +68,6 @@ export default function MyAddedVisaItem({ visa }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Send the updated data to the server
     fetch(`http://localhost:5000/visa/${currentVisa._id}`, {
       method: "PUT",
       headers: {
@@ -80,6 +80,11 @@ export default function MyAddedVisaItem({ visa }) {
         swal("Visa has been updated!", {
           icon: "success",
         });
+        setVisas((prevVisas) =>
+          prevVisas.map((visa) =>
+            visa._id === currentVisa._id ? { ...visa, ...currentVisa } : visa
+          )
+        );
         setIsModalOpen(false);
       })
       .catch((error) => {
@@ -119,7 +124,7 @@ export default function MyAddedVisaItem({ visa }) {
         <div className="flex gap-2 justify-center">
           <button
             className="bg-green-500 px-5 rounded-md font-bold py-1 text-white text-sm"
-            onClick={() => handleUpdate(visa)} // Pass the visa object to the handler
+            onClick={() => handleUpdate(visa)} 
           >
             Update
           </button>

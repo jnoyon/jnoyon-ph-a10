@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 
-export default function VisaApplicationItem({application}) {
+export default function VisaApplicationItem({application, setApplications}) {
     const {_id, appliedDate, firstName, lastName, email, countryImageUrl, countryName, visaType, processingTime, fee, validity, applicationMethod } = application;
     const handleCancel = (_id) => {
-        console.log(_id);
+        
         swal({
           title: "Are you sure?",
           text: "Once deleted, you will not be able to recover this Visa!",
@@ -18,11 +17,12 @@ export default function VisaApplicationItem({application}) {
             })
               .then((res) => res.json())
               .then((data) => {
-                console.log(data.deletedCount);
+                
                 if (data.deletedCount > 0) {
                   swal("Visa has been deleted!", {
                     icon: "success",
                   });
+                  setApplications((prevApplication) => prevApplication.filter((visa) => visa._id !== _id))
                 } else {
                   swal("Visa can be be deleted!", {
                     icon: "error",

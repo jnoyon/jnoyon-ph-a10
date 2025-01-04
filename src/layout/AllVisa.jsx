@@ -15,6 +15,7 @@ export default function AllVisa() {
   return (
     <div className='container mx-auto w-11/12 mb-5'>
       <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5"> All Visas </h2>
+      
       {loading ? (
         <div className="flex justify-center items-center min-h-screen">
        
