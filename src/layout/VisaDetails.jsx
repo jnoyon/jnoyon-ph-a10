@@ -25,7 +25,7 @@ export default function VisaDetails() {
       const appliedDate = e.target.date.value;
       const fee = e.target.fee.value;
       
-      const visaApplication = { countryName, countryImageUrl, processingTime, visaType, email, firstName, lastName, appliedDate, fee };
+      const visaApplication = { countryName, countryImageUrl, processingTime, visaType, email, firstName, lastName, appliedDate, fee, validity, applicationMethod };
 
       fetch('http://localhost:5000/visa-application', {
         method: 'POST',
@@ -58,11 +58,8 @@ export default function VisaDetails() {
               <li> <b> Procession Time: </b> {processingTime} </li>
               <li> <b> Fee: </b> {fee} </li>
               <li> <b> Validity: </b> {validity} </li>
-              <li> <b> Validity: </b> {validPassport} </li>
-              <li> <b> Validity: </b> {passportPhoto} </li>
+              <li> <b> Documents: </b> {validPassport&& 'Valid Passport,'} {visaApplicationForm&& 'Visa Application Form,'} {passportPhoto&& 'Recent Passport Sized Photograph'} </li>
               <li> <b> Age Restriction: </b> {ageRestriction} </li>
-              <li> <b> Validity: </b> {visaApplicationForm} </li>
-              <li> <b> Validity: </b> {visaApplicationForm} </li>
               <li> <b> Bio: </b> {bio} </li>
               <li> <b> Applicatino Method: </b> {applicationMethod} </li>
           </ul>

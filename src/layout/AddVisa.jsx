@@ -32,6 +32,7 @@ export default function AddVisa() {
       fee,
       validity,
       applicationMethod}
+      console.log(newVisa)
 
       // 
       fetch('http://localhost:5000/visa', {
@@ -102,23 +103,23 @@ export default function AddVisa() {
   </div>
   
   <div className="col-span-2">
-  <h2 className="font-bold">Required Documents</h2>
-  <div className="flex flex-col md:flex-row gap-2 border border-solid border-base-300 rounded-md p-1">
-    <label className="label cursor-pointer flex justify-start gap-2">
-      <input type="checkbox" name="validpassport" className="checkbox" />
-      <span className="label-text font-bold">Valid Passport</span>
-    </label>
-    
-    <label className="label cursor-pointer flex justify-start gap-2">
-      <input type="checkbox" name="visaapplicationform" className="checkbox" />
-      <span className="label-text font-bold">Visa Application Form</span>
-    </label>
-    
-    <label className="label cursor-pointer flex justify-start gap-2">
-      <input type="checkbox" name="passportphoto" className="checkbox" />
-      <span className="label-text font-bold">Recent Passport Sized Photograph</span>
-    </label>
-  </div>
+    <h2 className="font-bold">Required Documents</h2>
+    <div className="flex flex-col md:flex-row gap-2 border border-solid border-base-300 rounded-md p-1">
+      <label className="label cursor-pointer flex justify-start gap-2">
+        <input type="checkbox" name="validpassport" className="checkbox" />
+        <span className="label-text font-bold">Valid Passport</span>
+      </label>
+      
+      <label className="label cursor-pointer flex justify-start gap-2">
+        <input type="checkbox" name="visaapplicationform" className="checkbox" />
+        <span className="label-text font-bold">Visa Application Form</span>
+      </label>
+      
+      <label className="label cursor-pointer flex justify-start gap-2">
+        <input type="checkbox" name="passportphoto" className="checkbox" />
+        <span className="label-text font-bold">Recent Passport Sized Photograph</span>
+      </label>
+    </div>
   </div>
   
   <div className="flex flex-col">
