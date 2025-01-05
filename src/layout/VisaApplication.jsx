@@ -4,7 +4,8 @@ import VisaApplicationItem from "../components/VisaApplicationItem";
 export default function VisaApplication() {
   const [loading, setLoading] = useState(true);
     const [myData, setMyData] = useState(null);
-  
+    const [searchTerm, setSearchTerm] = useState('');
+
     useEffect(() => {
       fetch('https://jnoyon-ph-a10-server.vercel.app/visa-application')
         .then((res) => res.json())
@@ -18,12 +19,22 @@ export default function VisaApplication() {
         });
     }, []);
 
+    const handleSearch = (event) => {
+      setSearchTerm(event.target.value); 
+    };
+
+
+    const filteredData = myData ? myData.filter(application => 
+      application.countryName.toLowerCase().includes(searchTerm.toLowerCase())
+    ) : [];
+
   return (
     <div className="container mx-auto w-11/12 mb-5">
       <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5"> All Applications </h2>
       <div className="mb-5">
         <label class="input input-bordered flex items-center gap-2">
-          <input type="text" class="grow" placeholder="Search" />
+          <input type="text" class="grow" placeholder="Search" value={searchTerm}
+            onChange={handleSearch} />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -42,9 +53,9 @@ export default function VisaApplication() {
         <div className="flex justify-center items-center min-h-screen">
           <span className="loading loading-bars loading-lg"></span>
        </div>
-      ): myData && myData.length > 0 ?  (
+      ): filteredData && filteredData.length > 0 ?  (
         <div className="grid md:grid-cols-4 gap-5">
-        {myData.map((application, index) => (
+        {filteredData.map((application, index) => (
           <VisaApplicationItem
             key={index}
             application={application}
