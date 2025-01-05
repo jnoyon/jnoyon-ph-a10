@@ -8,7 +8,8 @@ export default function VisaApplication() {
   const [applications, setApplications] = useState(LoadApplications);
 
   useEffect(()=> {
-    if(LoadApplications && LoadApplications.length > 0){
+    if(LoadApplications){
+      setApplications(LoadApplications)
       setLoading(false)
     }
   }, [LoadApplications])
@@ -35,10 +36,9 @@ export default function VisaApplication() {
       </div>
       {loading? (
         <div className="flex justify-center items-center min-h-screen">
-       
-        <span className="loading loading-bars loading-lg"></span>
+          <span className="loading loading-bars loading-lg"></span>
        </div>
-      ): (
+      ): applications && applications.length > 0 ?  (
         <div className="grid md:grid-cols-4 gap-5">
         {applications.map((application, index) => (
           <VisaApplicationItem
@@ -48,6 +48,10 @@ export default function VisaApplication() {
           ></VisaApplicationItem>
         ))}
       </div>
+      ) : (
+        <div className="flex justify-center items-center min-h-screen">
+          <h1 className="text-3xl"> No Data Found </h1>
+       </div>
       )
 
       }

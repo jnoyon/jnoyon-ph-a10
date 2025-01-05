@@ -51,7 +51,9 @@ export default function AddVisa() {
             icon: 'success',
           });
         }
+        e.target.reset();
       })
+      
   }
   return (
     <div className='container mx-auto w-11/12 py-5'>
@@ -70,6 +72,7 @@ export default function AddVisa() {
       name="countryimageurl"
       className="input input-bordered"
       placeholder="Country URL"
+      required
     />
   </div>
   
@@ -79,7 +82,7 @@ export default function AddVisa() {
       type="text"
       name="countryname"
       className="input input-bordered"
-      placeholder="Country Name"
+      placeholder="Country Name" required
     />
   </div>
   

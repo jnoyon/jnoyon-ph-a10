@@ -6,7 +6,6 @@ export default function PrivateRoute({children}) {
 
     const {user, loading} = useContext(AuthContext)
     const location = useLocation();
-    console.log(location.pathname)
     if(loading){
 
        return (<div className='container mx-auto w-11/12 flex items-center justify-center min-h-lvh'>

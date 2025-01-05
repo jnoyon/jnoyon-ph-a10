@@ -87,7 +87,7 @@ export default function VisaDetails() {
                   type="text"
                   name="fname"
                   className="input input-bordered"
-                  
+                  required
                 />
               </div>
               <div className="flex flex-col">
@@ -96,7 +96,7 @@ export default function VisaDetails() {
                   type="text"
                   name="lname"
                   className="input input-bordered"
-                  
+                  required
                 />
               </div>
               <div className="flex flex-col">
