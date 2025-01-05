@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
 import VisaApplicationItem from "../components/VisaApplicationItem";
 
 export default function VisaApplication() {
-  const LoadApplications = useLoaderData();
-  const [loading, setLoading] = useState(true)
-  const [applications, setApplications] = useState(LoadApplications);
-
-  useEffect(()=> {
-    if(LoadApplications){
-      setApplications(LoadApplications)
-      setLoading(false)
-    }
-  }, [LoadApplications])
+  const [loading, setLoading] = useState(true);
+    const [myData, setMyData] = useState(null);
+  
+    useEffect(() => {
+      fetch('https://jnoyon-ph-a10-server.vercel.app/visa-application')
+        .then((res) => res.json())
+        .then((data) => {
+          setMyData(data);  
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+          setLoading(false); 
+        });
+    }, []);
 
   return (
     <div className="container mx-auto w-11/12 mb-5">
@@ -38,13 +42,13 @@ export default function VisaApplication() {
         <div className="flex justify-center items-center min-h-screen">
           <span className="loading loading-bars loading-lg"></span>
        </div>
-      ): applications && applications.length > 0 ?  (
+      ): myData && myData.length > 0 ?  (
         <div className="grid md:grid-cols-4 gap-5">
-        {applications.map((application, index) => (
+        {myData.map((application, index) => (
           <VisaApplicationItem
             key={index}
             application={application}
-            setApplications={setApplications}
+            myData={myData}
           ></VisaApplicationItem>
         ))}
       </div>

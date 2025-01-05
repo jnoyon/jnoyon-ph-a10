@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch('http://localhost:5000/visa')
+       
       },
       {
         path: "/add-visa",
@@ -37,22 +37,22 @@ const router = createBrowserRouter([
       {
         path: "/all-visa",
         element: <AllVisa></AllVisa>,
-        loader: () => fetch('http://localhost:5000/visa')
+        loader: () => fetch('https://jnoyon-ph-a10-server.vercel.app/visa')
       },
       {
         path: "/added-visa",
         element: <PrivateRoute> <AddedVisa></AddedVisa></PrivateRoute>,
-        loader: () => fetch('http://localhost:5000/visa')
+        loader: () => fetch('https://jnoyon-ph-a10-server.vercel.app/visa')
       },
       {
         path: "/visa-application",
         element: <PrivateRoute> <VisaApplication></VisaApplication> </PrivateRoute>,
-        loader: () => fetch('http://localhost:5000/visa-application')
+        loader: () => fetch('https://jnoyon-ph-a10-server.vercel.app/visa-application')
       },
       {
         path: "visa/:_id",
         element: <PrivateRoute> <VisaDetails></VisaDetails> </PrivateRoute>,
-        loader: () => fetch('http://localhost:5000/visa')
+        loader: () => fetch('https://jnoyon-ph-a10-server.vercel.app/visa')
       },
       {
         path: '/login',

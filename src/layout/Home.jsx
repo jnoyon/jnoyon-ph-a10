@@ -2,19 +2,26 @@ import React, { useEffect, useState } from 'react'
 import Features from '../components/Features'
 import Slider from '../components/Slider'
 import Consult from '../components/Consult'
-import { useLoaderData } from 'react-router-dom'
 import LatestVisa from '../components/LatestVisa'
 
 
 export default function Home() {
-  const visas = useLoaderData() 
   const [loading, setLoading] = useState(true);
+  const [myData, setMyData] = useState(null);
 
   useEffect(() => {
-    if (visas) {
-      setLoading(false);
-    }
-  }, [visas]);
+    fetch('https://jnoyon-ph-a10-server.vercel.app/visa')
+      .then((res) => res.json())
+      .then((data) => {
+        setMyData(data);  
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false); 
+      });
+  }, []);
+  
   return (
     <div>
       <Slider />
@@ -24,8 +31,8 @@ export default function Home() {
         <div className="flex justify-center items-center min-h-[200px]">
           <span className="loading loading-bars loading-lg"></span>
         </div>
-      ) : visas && visas.length > 0 ? (
-        <LatestVisa visas={visas} />
+      ) : myData && myData.length > 0 ? (
+        <LatestVisa visas={myData} />
       ) : (
         <div className="flex justify-center items-center min-h-[200px]">
           <p className="text-gray-500 text-lg">No Visas Available</p>

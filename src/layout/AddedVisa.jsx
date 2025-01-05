@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { useLoaderData } from 'react-router-dom'
 import MyAddedVisaItem from '../components/MyAddedVisaItem'
 
 export default function AddedVisa() {
-  const loadedVisas = useLoaderData();  
-  const [visas, setVisas] = useState(loadedVisas); 
+  const [visas, setVisas] = useState([]); 
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    if (loadedVisas) {
-      setVisas(loadedVisas);
-    }
-    setLoading(false); // Stop loading when data is loaded
-  }, [loadedVisas]);
+      fetch('https://jnoyon-ph-a10-server.vercel.app/visa')
+        .then((res) => res.json())
+        .then((data) => {
+          setVisas(data);  
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+          setLoading(false); 
+        });
+    }, []);
 
 
   return (
