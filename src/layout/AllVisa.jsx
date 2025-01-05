@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import VisaItem from '../components/VisaItem'
 import { FaFilter } from "react-icons/fa6";
+import { Helmet } from 'react-helmet';
 export default function AllVisa() {
   const [loading, setLoading] = useState(true);
     const [myData, setMyData] = useState([]);
@@ -39,7 +40,9 @@ export default function AllVisa() {
 
   return (
     <div className='container mx-auto w-11/12 mb-5'>
-      
+      <Helmet>
+            <title> All Visas - Visa Navigator </title>
+      </Helmet>
       <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5"> All Visas </h2>
       <div className="flex justify-between bg-base-300 mb-5 rounded-md p-2 items-center">
         <h2 className='font-bold md:text-2xl flex items-center gap-2'> <FaFilter />  <span> Filter Visa </span> </h2>

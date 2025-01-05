@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import VisaApplicationItem from "../components/VisaApplicationItem";
+import { Helmet } from "react-helmet";
 
 export default function VisaApplication() {
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,9 @@ export default function VisaApplication() {
     
   return (
     <div className="container mx-auto w-11/12 mb-5">
+      <Helmet>
+            <title> All Applications - Visa Navigator </title>
+      </Helmet>
       <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5"> All Applications </h2>
       <div className="mb-5">
         <label class="input input-bordered flex items-center gap-2">
@@ -59,7 +63,7 @@ export default function VisaApplication() {
           <VisaApplicationItem
             key={index}
             application={application}
-            myData={myData}
+            setMyData={setMyData}
           ></VisaApplicationItem>
         ))}
       </div>

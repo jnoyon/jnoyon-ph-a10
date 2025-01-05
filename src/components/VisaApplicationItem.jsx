@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../providers/AuthProvider';
 
-export default function VisaApplicationItem({application, setApplications}) {
+export default function VisaApplicationItem({application, setMyData}) {
   const {user} = useContext(AuthContext);
     const {_id, appliedDate, firstName, lastName, email, countryImageUrl, countryName, visaType, processingTime, fee, validity, applicationMethod } = application;
     const handleCancel = (_id) => {
@@ -24,7 +24,7 @@ export default function VisaApplicationItem({application, setApplications}) {
                   swal("Visa has been deleted!", {
                     icon: "success",
                   });
-                  setApplications((prevApplication) => prevApplication.filter((visa) => visa._id !== _id))
+                  setMyData((prevApplication) => prevApplication.filter((visa) => visa._id !== _id))
                 } else {
                   swal("Visa can be be deleted!", {
                     icon: "error",

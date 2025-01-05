@@ -3,6 +3,7 @@ import Features from '../components/Features'
 import Slider from '../components/Slider'
 import Consult from '../components/Consult'
 import LatestVisa from '../components/LatestVisa'
+import { Helmet } from 'react-helmet'
 
 
 export default function Home() {
@@ -24,6 +25,9 @@ export default function Home() {
   
   return (
     <div>
+      <Helmet>
+            <title>  Visa Navigator </title>
+      </Helmet>
       <Slider />
       <Features />
 

@@ -36,7 +36,7 @@ export default function MyAddedVisaItem({ visa, setVisas }) {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data.deletedCount);
+            
             if (data.deletedCount > 0) {
               swal("Visa has been deleted!", {
                 icon: "success",

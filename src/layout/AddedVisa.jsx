@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MyAddedVisaItem from '../components/MyAddedVisaItem'
+import { Helmet } from 'react-helmet';
 
 export default function AddedVisa() {
   const [visas, setVisas] = useState([]); 
@@ -21,6 +22,9 @@ export default function AddedVisa() {
 
   return (
     <div className="container mx-auto w-11/12 mb-5">
+      <Helmet>
+            <title> Added Visas - Visa Navigator </title>
+      </Helmet>
       <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5">My Added Visas</h2>
 
       {loading ? (
