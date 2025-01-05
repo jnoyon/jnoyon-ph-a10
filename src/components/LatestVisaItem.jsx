@@ -12,7 +12,7 @@ export default function LatestVisaItem({visa}) {
               <li> <b> Procession Time: </b> {processingTime} </li>
               <li> <b> Free: </b> {fee} </li>
               <li> <b> Validity: </b> {validity} </li>
-              <li> <b> Applicatino Method: </b> {applicationMethod} </li>
+              <li> <b> Application Method: </b> {applicationMethod} </li>
           </ul>
           <Link to={`/visa/${_id}`} className='bg-green-500 px-5 rounded-md font-bold py-1 text-white text-sm'> See Details </Link>
       </div>

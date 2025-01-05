@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import swal from "sweetalert";
+import { AuthContext } from "../providers/AuthProvider";
 
 export default function MyAddedVisaItem({ visa, setVisas }) {
   const {
@@ -11,7 +12,12 @@ export default function MyAddedVisaItem({ visa, setVisas }) {
     fee,
     validity,
     applicationMethod,
+    userEmail
   } = visa;
+
+  const {user} = useContext(AuthContext);
+
+ 
 
   const [currentVisa, setCurrentVisa] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +31,7 @@ export default function MyAddedVisaItem({ visa, setVisas }) {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/visa/${_id}`, {
+        fetch(`https://jnoyon-ph-a10-server.vercel.app/visa/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -68,7 +74,7 @@ export default function MyAddedVisaItem({ visa, setVisas }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/visa/${currentVisa._id}`, {
+    fetch(`https://jnoyon-ph-a10-server.vercel.app/visa/${currentVisa._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +100,9 @@ export default function MyAddedVisaItem({ visa, setVisas }) {
         console.log("Error updating visa: ", error);
       });
   };
-
+  if(userEmail !== user.email){
+    return null;
+  }
   return (
     <>
       <div className="bg-base-200 shadow-sm rounded-md p-2 text-center">

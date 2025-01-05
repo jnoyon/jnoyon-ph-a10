@@ -27,7 +27,7 @@ export default function VisaApplication() {
     const filteredData = myData ? myData.filter(application => 
       application.countryName.toLowerCase().includes(searchTerm.toLowerCase())
     ) : [];
-
+    
   return (
     <div className="container mx-auto w-11/12 mb-5">
       <h2 className="font-bold text-center text-3xl md:text-5xl uppercase py-5"> All Applications </h2>

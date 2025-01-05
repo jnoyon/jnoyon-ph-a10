@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Helmet } from 'react-helmet'
 import swal from 'sweetalert';
+import { AuthContext } from '../providers/AuthProvider';
 export default function AddVisa() {
+  const {user} = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -18,7 +20,8 @@ export default function AddVisa() {
     const fee = e.target.fee.value;
     const validity = e.target.validity.value;
     const applicationMethod = e.target.applicationmethod.value;
-
+    const userEmail  = user.email;
+    console.log(userEmail)
     // You can now use these values to send to an API, or handle however you need
     const newVisa = {countryImageUrl,
       countryName,
@@ -31,11 +34,11 @@ export default function AddVisa() {
       ageRestriction,
       fee,
       validity,
-      applicationMethod}
-      console.log(newVisa)
-
+      applicationMethod,
+      userEmail
+    }
       // 
-      fetch('http://localhost:5000/visa', {
+      fetch('https://jnoyon-ph-a10-server.vercel.app/visa', {
         method: 'POST',
         headers: {
           'content-type' : 'application/json'

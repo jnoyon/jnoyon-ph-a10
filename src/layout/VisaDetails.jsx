@@ -27,7 +27,7 @@ export default function VisaDetails() {
       
       const visaApplication = { countryName, countryImageUrl, processingTime, visaType, email, firstName, lastName, appliedDate, fee, validity, applicationMethod };
 
-      fetch('http://localhost:5000/visa-application', {
+      fetch('https://jnoyon-ph-a10-server.vercel.app/visa-application', {
         method: 'POST',
         headers: {
           'content-type' : 'application/json'

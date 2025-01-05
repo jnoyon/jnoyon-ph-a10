@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../providers/AuthProvider';
 
 export default function VisaApplicationItem({application, setApplications}) {
+  const {user} = useContext(AuthContext);
     const {_id, appliedDate, firstName, lastName, email, countryImageUrl, countryName, visaType, processingTime, fee, validity, applicationMethod } = application;
     const handleCancel = (_id) => {
         
@@ -12,7 +14,7 @@ export default function VisaApplicationItem({application, setApplications}) {
           dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
-            fetch(`http://localhost:5000/visa-application/${_id}`, {
+            fetch(`https://jnoyon-ph-a10-server.vercel.app/visa-application/${_id}`, {
               method: "DELETE",
             })
               .then((res) => res.json())
@@ -40,6 +42,10 @@ export default function VisaApplicationItem({application, setApplications}) {
           }
         });
       };
+      if(email !== user.email){
+        return null;
+      }
+      
     return (
       <div className='bg-base-200 shadow-sm rounded-md p-2 text-center'>
           <img src={countryImageUrl} alt="contry" className='h-20 mx-auto rounded-md mb-1' />
